@@ -62,6 +62,15 @@ async def error_start_questions(msg: types.Message, state: FSMContext):
         return
 
 
+@dp.message_handler(GroupFilter(), Command('help'), AdminFilter(), state=QuestionsStatesGroup.start)
+async def bot_help(message: types.Message):
+    text = ("Buyruqlar: ",
+            "/start_questions - O'yinni ishga tushirish",
+            "/stop_questions - O'yini tugatish")
+
+    await message.answer("\n".join(text))
+
+
 @dp.message_handler(GroupFilter(), Command("result"), AdminFilter(), state=QuestionsStatesGroup.stop)
 async def result_questions(msg: types.Message, state: FSMContext):
     id_group = msg.chat.id
